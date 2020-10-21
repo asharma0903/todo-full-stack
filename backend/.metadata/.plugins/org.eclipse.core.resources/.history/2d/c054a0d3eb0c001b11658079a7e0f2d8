@@ -1,0 +1,58 @@
+package com.todo.controller.service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.todo.model.Todo;
+
+@Service
+public class TodoService {
+
+	private static List<Todo> todoList = new ArrayList<>();
+	private static long idCounter = 0;
+	
+	static {
+		todoList.add(new Todo(++idCounter, "anshuls", "Learn NodeJS", new Date(), false));
+		todoList.add(new Todo(++idCounter, "anshuls", "Learn ExpressJS", new Date(), false));
+		todoList.add(new Todo(++idCounter, "anshuls", "Learn MongoDB", new Date(), false));
+	}
+	
+	public List<Todo> getAllTodos() {
+		
+		return todoList;
+	}
+	
+	public Todo deleteTodoById(long id) {
+		Todo deleteTodo = findById(id);
+		if(deleteTodo == null) {
+			return null;
+		}
+		
+		if(todoList.remove(deleteTodo)) {
+			return deleteTodo;
+		} else {
+			return null;
+		}
+		
+	}
+
+	public Todo findById(long id) {
+		
+		for(Todo todo: todoList) {
+			if(todo.getId() == id) {
+				return todo;
+			}
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+}
